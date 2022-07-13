@@ -1,14 +1,15 @@
 <template>
   <div>
-    <router-view></router-view>
+    问答区域
   </div>
 </template>
 
 <script>
 export default {
-  name: "App",
-};
+
+}
 </script>
 
 <style>
+
 </style>
