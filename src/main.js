@@ -8,7 +8,7 @@ import '@/styles/icon.less'
 import 'amfe-flexible'
 import store from './store'
 import '@/utils/day'
-import { Form, Button,Badge ,List, Divider ,Loading, Popup, Search, PullRefresh, Field, Dialog, Tab, Tabs, NavBar, Icon, Toast, CountDown, Tabbar, Cell, CellGroup, TabbarItem, Grid, GridItem, Image as VanImage } from 'vant'
+import { Form, Picker, Button, Badge, List, Divider, Loading, Popup, Search, PullRefresh, Field, Dialog, Tab, Tabs, NavBar, Icon, Toast, CountDown, Tabbar, Cell, CellGroup, TabbarItem, Grid, GridItem, Image as VanImage } from 'vant'
 
 
 Vue.use(Icon);
@@ -36,6 +36,7 @@ Vue.use(Loading);
 Vue.use(Search);
 Vue.use(Divider);
 Vue.use(Badge);
+Vue.use(Picker);
 
 
 new Vue({

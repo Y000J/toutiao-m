@@ -30,5 +30,5 @@ export const userData = () => request({
 export const editUserData = params => request({
   method: 'PATCH',
   url: '/app/v1_0/user/profile',
-  params
+  data: params
 })

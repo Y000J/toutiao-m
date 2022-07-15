@@ -51,10 +51,10 @@ export default {
     async editUserNickName() {
       try {
         const { data } = await editUserDataAPI({
-        //   name: this.message,
-          name: 'shgaw',
+          name: this.message,
         });
         this.$toast.success("修改成功！");
+        this.user.name = data.data.name;
         this.$emit("cancelShow", !this.nickNameShow);
       } catch (err) {
         console.log(err);
@@ -76,6 +76,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     background-color: #ffffff;
+    margin-bottom: 16px;
     button {
       width: 200px;
       color: #2778ff;
