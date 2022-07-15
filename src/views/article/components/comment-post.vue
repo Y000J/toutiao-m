@@ -20,9 +20,13 @@ export default {
   name: "CommentPost",
   components: {},
   props: {
-    articleId: {
+    target: {
       type: [Object, Number, String],
       required: true,
+    },
+    articleId: {
+      type: [Object, Number, String],
+      default: () => null,
     },
   },
   data() {
@@ -39,13 +43,16 @@ export default {
     async postComment() {
       try {
         const { data } = await addCommentAPI({
-          target: this.articleId,
+          target: this.target,
           content: this.message,
+          art_id: this.articleId,
         });
         // 关闭弹出框,并将添加的数据传给父组件
 
-        this.$emit("postSuccess", false, data.data,this.message);
+        this.$emit("postSuccess", false, data.data, this.message);
+        this.$emit("replySuccess", false, data.data, this.message);
         this.$toast.success("评论成功！");
+        this.message = "";
       } catch (err) {
         console.log(err);
       }

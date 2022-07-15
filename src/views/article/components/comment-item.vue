@@ -24,7 +24,7 @@
         <span class="comment-pubdate">{{
           commentItem.pubdate | relativeTime
         }}</span>
-        <van-button class="reply-btn" round
+        <van-button class="reply-btn" round @click="reply" v-if="isShow"
           >回复 {{ commentItem.reply_count }}</van-button
         >
       </div>
@@ -33,14 +33,19 @@
 </template>
 
 <script>
+import { EventBus } from "@/eventBus/index";
 import { commendCommentAPI, delCommendCommentAPI } from "@/api";
 export default {
   name: "CommentItem",
   components: {},
   props: {
     commentItem: {
-      type: Object,
+      type: [Object, String],
       required: true,
+    },
+    isShow: {
+      type: [Boolean, String],
+      default: () => true,
     },
   },
   data() {
@@ -48,7 +53,6 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {},
   mounted() {},
   methods: {
     // 点赞功能
@@ -71,6 +75,9 @@ export default {
       } catch (err) {
         console.log(err);
       }
+    },
+    reply() {
+      EventBus.$emit("isReplyShow", true, this.commentItem);
     },
   },
 };

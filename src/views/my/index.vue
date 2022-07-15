@@ -7,7 +7,7 @@
           <van-image
             fit="cover"
             round
-            :src="require('@/assets/123.jpg')"
+            :src="userInfo.photo"
             class="loginImg"
           />
           <span class="nickname">{{ userInfo.name }}</span>

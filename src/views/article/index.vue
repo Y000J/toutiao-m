@@ -90,7 +90,7 @@
         <!-- 评论弹出层 -->
         <van-popup v-model="isPostShow" position="bottom">
           <CommentPost
-            :articleId="articleDetails.art_id"
+            :target="articleDetails.art_id"
             @postSuccess="postSuccess"
           />
         </van-popup>
@@ -115,6 +115,32 @@
       </div>
       <!-- /加载失败：其它未知错误（例如网络原因或服务端异常） -->
     </div>
+    <!-- 回复评论 -->
+    <van-popup v-model="isReply" position="bottom">
+      <CommentPost
+        :articleId="articleId"
+        :target="commentIfo.com_id"
+        @replySuccess="replySuccess"
+      />
+    </van-popup>
+    <!-- 回复评论 -->
+
+    <!-- 评论弹出层 -->
+    <van-popup
+      v-model="isReplyShow"
+      v-if="isReplyShow"
+      position="bottom"
+      :style="{ height: '70%' }"
+    >
+      <ReplyComment
+        :commentIfo="commentIfo"
+        :articleId="articleId"
+        :isReply="isReply"
+        @isShow="isReply = $event"
+        :replyList="replyList"
+      />
+    </van-popup>
+    <!-- 评论弹出层 -->
   </div>
 </template>
 
@@ -130,12 +156,15 @@ import { ImagePreview } from "vant";
 import FollowUser from "@/components/follow-user";
 import ArticleCommemt from "./components/article-comment.vue";
 import CommentPost from "./components/comment-post.vue";
+import { EventBus } from "@/eventBus/index";
+import ReplyComment from "./components/reply-comment.vue";
 export default {
   name: "ArticleIndex",
   components: {
     FollowUser,
     ArticleCommemt,
     CommentPost,
+    ReplyComment,
   },
   props: {
     articleId: {
@@ -152,6 +181,10 @@ export default {
       commentCount: 0, //评论总数
       isPostShow: false, //是否显示评论弹出框
       commentList: [], //评论列表
+      isReplyShow: false, //评论回复弹层
+      commentIfo: "", //回复评论对象信息
+      isReply: false, //回复评论
+      replyList: [],
     };
   },
   computed: {},
@@ -159,8 +192,24 @@ export default {
   created() {
     this.getartcileDetails();
   },
+  updated() {
+    this.reply();
+  },
 
   methods: {
+    reply() {
+      EventBus.$on("isReplyShow", (isShow, commentIfo) => {
+        this.replyList = [];
+        this.commentIfo = commentIfo;
+        if (commentIfo.reply_count > 0) {
+          // 有回复  弹出回复层
+          this.isReplyShow = isShow;
+        } else {
+          // 没有回复  点击回复  弹出输入框
+          this.isReply = isShow;
+        }
+      });
+    },
     // 获取文章详情
     async getartcileDetails() {
       this.loading = true;
@@ -238,8 +287,14 @@ export default {
     postSuccess(isShow, data, message) {
       this.isPostShow = isShow;
       data.content = message;
-      console.log(data);
       this.commentList.unshift(data);
+    },
+    replySuccess(isShow, data, message) {
+      // 回复加1
+      this.commentIfo.reply_count++;
+      this.isReply = isShow;
+      data.content = message;
+      this.replyList.unshift(data);
     },
   },
 };

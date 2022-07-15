@@ -7,6 +7,7 @@
       finished-text="没有更多了"
       @load="onLoad"
       :error="error"
+      :immediate-check="false"
       error-text="加载失败！请稍后再试"
     >
       <CommentItem
@@ -14,11 +15,6 @@
         :key="index"
         :commentItem="item"
       />
-      <!-- <van-cell
-        v-for="(item, index) in commentList"
-        :key="index"
-        :title="item.content"
-      /> -->
     </van-list>
     <!-- 评论列表 -->
     <!-- 发布评论 -->
@@ -29,7 +25,6 @@
 <script>
 import { getCommentAPI } from "@/api";
 import CommentItem from "./comment-item.vue";
-import JSONBig from "json-bigint";
 export default {
   name: "ArticleCommemt",
   components: {
@@ -62,13 +57,13 @@ export default {
       try {
         const { data } = await getCommentAPI({
           type: "a",
-          source: JSONBig.stringify(this.articleId),
+          source: this.articleId,
           offset: this.offset,
           limit: 10,
         });
         const { results } = data.data;
         // 将评论数据传递给父组件
-        this.$emit("onload-success", data);
+        this.$emit("onload-success", data.data);
         this.commentList.push(...results);
         this.loading = false;
         if (results.length) {
