@@ -12,7 +12,7 @@ export const login = data => request({
 // 获取用户自己的信息
 export const myInfo = params => request({
   method: 'get',
-  url:'/app/v1_0/user',
+  url: '/app/v1_0/user',
 })
 // 获取验证码
 export const sendSms = mobile => request({
@@ -20,3 +20,15 @@ export const sendSms = mobile => request({
   url: `/app/v1_0/sms/codes/${mobile}`
 })
 
+// 获取用户个人资料
+export const userData = () => request({
+  method: 'get',
+  url: '/app/v1_0/user/profile',
+})
+
+// 编辑用户个人资料
+export const editUserData = params => request({
+  method: 'PATCH',
+  url: '/app/v1_0/user/profile',
+  params
+})

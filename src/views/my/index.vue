@@ -13,7 +13,7 @@
           <span class="nickname">{{ userInfo.name }}</span>
         </div>
         <div class="right">
-          <van-button round size="mini" class="edit-info">编辑资料 </van-button>
+          <van-button round size="mini" class="edit-info" to="/user/data">编辑资料 </van-button>
         </div>
       </div>
       <!-- 用户信息 -->

@@ -53,9 +53,12 @@ const routes = [
     name: 'article',
     component: () => import('@/views/article'),
     props: true
-
+  },
+  {
+    path: '/user/data',
+    name: 'user-data',
+    component: () => import('@/views/user-data'),
   }
-
 ]
 
 const router = new VueRouter({
