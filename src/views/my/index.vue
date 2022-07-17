@@ -4,16 +4,13 @@
     <div class="logged-header header" v-if="$store.state.user">
       <div class="base-info">
         <div class="left">
-          <van-image
-            fit="cover"
-            round
-            :src="userInfo.photo"
-            class="loginImg"
-          />
+          <van-image fit="cover" round :src="userInfo.photo" class="loginImg" />
           <span class="nickname">{{ userInfo.name }}</span>
         </div>
         <div class="right">
-          <van-button round size="mini" class="edit-info" to="/user/data">编辑资料 </van-button>
+          <van-button round size="mini" class="edit-info" to="/user/data"
+            >编辑资料
+          </van-button>
         </div>
       </div>
       <!-- 用户信息 -->

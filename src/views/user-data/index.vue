@@ -7,7 +7,12 @@
     <!-- 导航栏 -->
     <!-- 资料 -->
     <van-cell-group class="user-info" :border="true">
-      <van-cell title="头像" is-link class="data-item">
+      <van-cell
+        title="头像"
+        is-link
+        class="data-item"
+        @click="$refs.file.click()"
+      >
         <van-image
           class="user-avatar"
           slot="default"
@@ -16,6 +21,9 @@
           :src="user.photo"
         />
       </van-cell>
+      <!-- 选择图片文件 -->
+      <input type="file" hidden ref="file" @change="onFileChange" />
+
       <van-cell
         title="昵称"
         :value="user.name"
@@ -49,7 +57,6 @@
     </van-popup>
     <!-- 昵称弹出层 -->
     <!-- 性别弹出层 -->
-
     <van-popup
       v-model="genderShow"
       position="bottom"
@@ -60,12 +67,25 @@
       <UserGender v-model="genderShow" :user="user" />
     </van-popup>
     <!-- 性别弹出层 -->
+    <!-- 头像弹出层 -->
+    <van-popup
+      v-if="avatarShow"
+      v-model="avatarShow"
+      position="bottom"
+      :style="{
+        height: '100%',
+      }"
+    >
+      <UserAvatar :img="img" @colse="avatarShow = false" :user="user" />
+    </van-popup>
+    <!-- 头像弹出层 -->
   </div>
 </template>
 
 <script>
 import UserNickName from "./components/user-nickName.vue";
 import UserGender from "./components/user-gender.vue";
+import UserAvatar from "./components/user-avatar.vue";
 import { userDataAPI } from "@/api";
 export default {
   name: "UserData",
@@ -74,12 +94,15 @@ export default {
       user: "", //用户个人信息
       nickNameShow: false, //昵称弹出层
       genderShow: false, //性别弹出层
+      avatarShow: false, //头像弹出层
+      img: "", //头像图片的blob数据
     };
   },
 
   components: {
     UserNickName,
     UserGender,
+    UserAvatar,
   },
   created() {
     this.userData();
@@ -94,6 +117,17 @@ export default {
         console.log(err);
         this.$toast.fail("数据加载失败！");
       }
+    },
+    // 获取图片文件、显示弹层
+    onFileChange() {
+      // 图片文件
+      const file = this.$refs.file.files[0];
+      // 基于图片文件获取blob数据
+      this.img = window.URL.createObjectURL(file);
+      // 显示弹出层
+      this.avatarShow = true;
+      // 清空内容
+      this.$refs.file.value = "";
     },
   },
 };

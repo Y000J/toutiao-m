@@ -1,6 +1,6 @@
 import { articleDetails, articleList, collectArticle, followUser, praise, removePraise, uncollectArticle, unfollowUser } from "./article";
 import { addChannel, deleteAssignChannel, getUserAllChannel, getUserChannelList, } from "./home";
-import { editUserData, login, myInfo, sendSms, userData } from "./user";
+import { editUserData, editUserPhoto, login, myInfo, sendSms, userData } from "./user";
 import { delSearchHistory, getHistory, searchResult, searchSuggest } from './search';
 import { addComment, commendComment, delCommendComment, getComment } from "./comment";
 export const loginAPI = login
@@ -28,3 +28,4 @@ export const delCommendCommentAPI = delCommendComment
 export const addCommentAPI = addComment
 export const userDataAPI = userData
 export const editUserDataAPI = editUserData
+export const editUserPhotoAPI = editUserPhoto

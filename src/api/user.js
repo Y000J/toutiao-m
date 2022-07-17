@@ -32,3 +32,10 @@ export const editUserData = params => request({
   url: '/app/v1_0/user/profile',
   data: params
 })
+
+// 编辑用户照片资料（头像、身份证）
+export const editUserPhoto = params => request({
+  method: 'PATCH',
+  url: '/app/v1_0/user/photo',
+  data: params
+})
