@@ -1,4 +1,5 @@
 import { getItem, setItem } from '@/utils/storage'
+import channelList from './Module/channelList'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -20,5 +21,10 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    channelList
+  },
+  getters: {
+    channelList: state => state.channelList.channelList
+    
   }
 })

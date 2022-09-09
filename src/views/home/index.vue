@@ -61,7 +61,7 @@
 <script>
 import ArticleList from "./components/ArticleList.vue";
 import ChannelEdit from "./components/channel-edit.vue";
-import { getUserChannelListAPI } from "@/api";
+import { mapGetters } from "vuex";
 export default {
   components: {
     ArticleList,
@@ -71,18 +71,15 @@ export default {
   data() {
     return {
       active: 0,
-      channelList: "", //频道列表
+      // channelList: "", //频道列表
       isShow: false, //控制更多按钮弹出层
     };
   },
-  async created() {
-    // 请求用户频道列表
-    try {
-      const { data } = await getUserChannelListAPI();
-      this.channelList = data.data.channels;
-    } catch (err) {
-      this.$toast("请求失败！" + err);
-    }
+  computed: {
+    ...mapGetters(["channelList"]),
+  },
+  created() {
+    this.$store.dispatch("channelList/getChannelList");
   },
   methods: {
     moreBtn() {
